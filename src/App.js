@@ -19,38 +19,33 @@ var data = [
 ];
 
 const App = () => {
-	const [hash, setHash] = useState({ data: data, obj: {} });
+	const [hash, setHash] = useState(data);
 	var homeData = [],
 		favData = [];
-
 	useEffect(() => {
 		console.log('Print me');
-		homeData = data.filter((d) => !d.favorite);
-		console.log(homeData);
-		favData = data.filter((d) => d.favorite);
-		console.log(favData);
-
-		setHash({ data: [...favData, ...homeData], obj: {} });
+		homeData = hash.filter((d) => !d.favorite);
+		favData = hash.filter((d) => d.favorite);
+		setHash([...favData, ...homeData]);
 	}, []);
 
 	// console.log('Hash', hash);
 
 	return (
 		<div style={{ padding: 30 }}>
-			{hash.data.map((d) => {
+			{hash.map((d, i) => {
 				return (
-					<div style={{ backgroundColor: d.favorite ? 'red' : 'white' }}>
+					<div key={d.id} style={{ backgroundColor: d.favorite ? 'red' : 'white' }}>
 						<h1>{d.id}</h1>
 						<p>{d.text}</p>
 						<button
-							onClick={(e) => {
-								setHash({ obj: d });
-								console.log('check', hash);
-								let excludeObj = hash.data.filter((e) => e.id !== d.id);
-								let includeObj = hash.data.filter((e) => e.id === d.id && e.fav === !d.favorite);
-								console.log('includeobj', includeObj);
+							onClick={() => {
+								console.log(i);
+								const restD = hash.filter((el) => el.id !== d.id);
 
-								console.log('Realhash', setHash({ data: hash.data }));
+								d.favorite
+									? setHash([...restD, { ...d, favorite: !d.favorite }])
+									: setHash([{ ...d, favorite: !d.favorite }, ...restD]);
 							}}>{`favorite ${d.favorite}`}</button>
 					</div>
 				);
