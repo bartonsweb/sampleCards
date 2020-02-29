@@ -23,24 +23,22 @@ const App = () => {
 	var homeData = [],
 		favData = [];
 	useEffect(() => {
-		console.log('Print me');
 		homeData = hash.filter((d) => !d.favorite);
 		favData = hash.filter((d) => d.favorite);
 		setHash([...favData, ...homeData]);
 	}, []);
 
-	// console.log('Hash', hash);
-
 	return (
 		<div style={{ padding: 30 }}>
+			<h1>Cats Project</h1>
+
 			{hash.map((d, i) => {
 				return (
-					<div key={d.id} style={{ backgroundColor: d.favorite ? 'red' : 'white' }}>
+					<div key={d.id} style={{ backgroundColor: d.favorite ? '#da7878' : 'white' }}>
 						<h1>{d.id}</h1>
 						<p>{d.text}</p>
 						<button
 							onClick={() => {
-								console.log(i);
 								const restD = hash.filter((el) => el.id !== d.id);
 
 								d.favorite
