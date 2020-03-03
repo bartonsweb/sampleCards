@@ -21,31 +21,37 @@ var data = [
 ];
 
 const App = () => {
-	const [hash, setHash] = useState(data);
+	const [hash, setHash] = useState({ catsdata: data, showFav: false, sortByLastWord: false });
 	var homeData = [],
 		favData = [];
 	useEffect(() => {
-		homeData = hash.filter((d) => !d.favorite);
-		favData = hash.filter((d) => d.favorite);
-		setHash([...favData, ...homeData]);
+		homeData = hash.catsdata.filter((d) => !d.favorite);
+		console.log('homeData', homeData);
+		favData = hash.catsdata.filter((d) => d.favorite);
+		console.log('favData', favData);
+		setHash({ ...hash, catsdata: [...favData, ...homeData] });
 	}, []);
 
+	console.log('\nState', hash);
+	console.log('catsdata', hash.catsdata);
 	return (
 		<div style={{ padding: 30 }}>
 			<h1>Cats Project</h1>
 
-			{hash.map((d, i) => {
+			{hash.catsdata.map((d, i) => {
 				return (
 					<div key={d.id} style={{ backgroundColor: d.favorite ? '#da7878' : 'white' }}>
 						<h1>{d.id}</h1>
 						<p>{d.text}</p>
 						<button
 							onClick={() => {
-								const restD = hash.filter((el) => el.id !== d.id);
+								const restD = hash.catsdata.filter((el) => el.id !== d.id);
+								const showFavorite = hash.showFav;
+								const sortByLastWords = hash.sortByLastWord;
 
 								d.favorite
-									? setHash([...restD, { ...d, favorite: !d.favorite }])
-									: setHash([{ ...d, favorite: !d.favorite }, ...restD]);
+									? setHash({ ...hash, catsdata: [...restD, { ...d, favorite: !d.favorite }]})
+									: setHash({...hash, catsdata:[{ ...d, favorite: !d.favorite }, ...restD]});
 							}}>{`favorite ${d.favorite}`}</button>
 					</div>
 				);
