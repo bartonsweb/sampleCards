@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
 
 var data = [
 	{ id: 1, text: 'A', favorite: false },
