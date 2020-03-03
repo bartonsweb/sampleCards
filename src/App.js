@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createStore, combineReducers } from 'redux';
-import { Provider, connect } from 'react-redux';
+import React, { useState, useEffect} from 'react';
 
 var data = [
 	{ id: 1, text: 'A', favorite: false },
@@ -26,14 +24,10 @@ const App = () => {
 		favData = [];
 	useEffect(() => {
 		homeData = hash.catsdata.filter((d) => !d.favorite);
-		console.log('homeData', homeData);
 		favData = hash.catsdata.filter((d) => d.favorite);
-		console.log('favData', favData);
 		setHash({ ...hash, catsdata: [...favData, ...homeData] });
 	}, []);
 
-	console.log('\nState', hash);
-	console.log('catsdata', hash.catsdata);
 	return (
 		<div style={{ padding: 30 }}>
 			<h1>Cats Project</h1>
@@ -46,12 +40,10 @@ const App = () => {
 						<button
 							onClick={() => {
 								const restD = hash.catsdata.filter((el) => el.id !== d.id);
-								const showFavorite = hash.showFav;
-								const sortByLastWords = hash.sortByLastWord;
 
 								d.favorite
-									? setHash({ ...hash, catsdata: [...restD, { ...d, favorite: !d.favorite }]})
-									: setHash({...hash, catsdata:[{ ...d, favorite: !d.favorite }, ...restD]});
+									? setHash({ ...hash, catsdata: [...restD, { ...d, favorite: !d.favorite }] })
+									: setHash({ ...hash, catsdata: [{ ...d, favorite: !d.favorite }, ...restD] });
 							}}>{`favorite ${d.favorite}`}</button>
 					</div>
 				);
