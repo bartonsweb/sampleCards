@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 var data = [
 	{ id: 1, text: 'A', favorite: false },
@@ -19,18 +19,42 @@ var data = [
 ];
 
 const App = () => {
-	const [hash, setHash] = useState({ catsdata: data, showFav: false, sortByLastWord: false });
-	var homeData = [],
+	const [hash, setHash] = useState({
+		catsdata: data,
+		notFavoriteCatsData: [],
+		showFav: false,
+		sortByLastWord: false,
+	});
+	var notFavData = [],
 		favData = [];
 	useEffect(() => {
-		homeData = hash.catsdata.filter((d) => !d.favorite);
+		notFavData = hash.catsdata.filter((d) => !d.favorite);
 		favData = hash.catsdata.filter((d) => d.favorite);
-		setHash({ ...hash, catsdata: [...favData, ...homeData] });
+		setHash({ ...hash, catsdata: [...favData, ...notFavData] });
 	}, []);
 
 	return (
 		<div style={{ padding: 30 }}>
 			<h1>Cats Project</h1>
+			<button
+				onClick={() => {
+					// const nonFavoriteCatsData = hash.catsdata.filter((d) => !d.favorite);
+					const favoriteCatsData = hash.catsdata.filter((d) => d.favorite);
+					if (hash.showFav) {
+						setHash({
+							...hash,
+							catsdata: [...favoriteCatsData, ...hash.notFavoriteCatsData],
+							showFav: false,
+						});
+					} else {
+						setHash({
+							...hash,
+							notFavoriteCatsData: hash.catsdata.filter((d) => !d.favorite),
+							catsdata: [...favoriteCatsData],
+							showFav: true,
+						});
+					}
+				}}>{`Show ${hash.showFav ? 'All' : 'Only Fav'}`}</button>
 
 			{hash.catsdata.map((d, i) => {
 				return (
