@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createStore, combineReducers } from 'redux';
-import { Provider, connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 
 var data = [
 	{ id: 1, text: 'A', favorite: false },
@@ -21,31 +19,55 @@ var data = [
 ];
 
 const App = () => {
-	const [hash, setHash] = useState(data);
-	var homeData = [],
+	const [hash, setHash] = useState({
+		catsdata: data,
+		notFavoriteCatsData: [],
+		showFav: false,
+		sortByLastWord: false,
+	});
+	var notFavData = [],
 		favData = [];
 	useEffect(() => {
-		homeData = hash.filter((d) => !d.favorite);
-		favData = hash.filter((d) => d.favorite);
-		setHash([...favData, ...homeData]);
+		notFavData = hash.catsdata.filter((d) => !d.favorite);
+		favData = hash.catsdata.filter((d) => d.favorite);
+		setHash({ ...hash, catsdata: [...favData, ...notFavData] });
 	}, []);
 
 	return (
 		<div style={{ padding: 30 }}>
 			<h1>Cats Project</h1>
+			<button
+				onClick={() => {
+					// const nonFavoriteCatsData = hash.catsdata.filter((d) => !d.favorite);
+					const favoriteCatsData = hash.catsdata.filter((d) => d.favorite);
+					if (hash.showFav) {
+						setHash({
+							...hash,
+							catsdata: [...favoriteCatsData, ...hash.notFavoriteCatsData],
+							showFav: false,
+						});
+					} else {
+						setHash({
+							...hash,
+							notFavoriteCatsData: hash.catsdata.filter((d) => !d.favorite),
+							catsdata: [...favoriteCatsData],
+							showFav: true,
+						});
+					}
+				}}>{`Show ${hash.showFav ? 'All' : 'Only Fav'}`}</button>
 
-			{hash.map((d, i) => {
+			{hash.catsdata.map((d, i) => {
 				return (
 					<div key={d.id} style={{ backgroundColor: d.favorite ? '#da7878' : 'white' }}>
 						<h1>{d.id}</h1>
 						<p>{d.text}</p>
 						<button
 							onClick={() => {
-								const restD = hash.filter((el) => el.id !== d.id);
+								const restD = hash.catsdata.filter((el) => el.id !== d.id);
 
 								d.favorite
-									? setHash([...restD, { ...d, favorite: !d.favorite }])
-									: setHash([{ ...d, favorite: !d.favorite }, ...restD]);
+									? setHash({ ...hash, catsdata: [...restD, { ...d, favorite: !d.favorite }] })
+									: setHash({ ...hash, catsdata: [{ ...d, favorite: !d.favorite }, ...restD] });
 							}}>{`favorite ${d.favorite}`}</button>
 					</div>
 				);
