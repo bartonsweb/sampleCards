@@ -8,3 +8,11 @@
 p {
 	pointer-events: none;
 }
+
+.card-1 {
+	opacity: 0.5;
+}
+
+.card-2 {
+	opacity: 0.1;
+}

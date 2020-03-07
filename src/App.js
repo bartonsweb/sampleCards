@@ -73,8 +73,7 @@ const App = () => {
 				return (
 					<div ref={node} key={d.id} style={{ backgroundColor: d.favorite ? '#da7878' : '#f5f699' }}>
 						<div
-							className='card'
-							style={{ opacity: `${d.opacity}` }}
+							// className={`card-${d.opacity}`}
 							onClick={(event) => {
 								// console.log(
 								// 	'e.target class=>',
@@ -87,10 +86,10 @@ const App = () => {
 								const restD = hash.catsdata.filter((el) => el.id !== d.id);
 
 								if (event.target.className === 'card' && event.target.children[0].innerText != d.id) {
-									setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.1 }] });
+									setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.5 }] });
 									console.log('Hash', hash);
 								} else {
-									setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.5 }] });
+									setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.1 }] });
 									console.log('elseHash', hash);
 								}
 							}}>
