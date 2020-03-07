@@ -83,15 +83,15 @@ const App = () => {
 								// 	'##d.id=>',
 								// 	toString(d.id)
 								// );
-								const restD = hash.catsdata.filter((el) => el.id !== d.id);
+								// const restD = hash.catsdata.filter((el) => el.id !== d.id);
 
-								if (event.target.className === 'card' && event.target.children[0].innerText != d.id) {
-									setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.5 }] });
-									console.log('Hash', hash);
-								} else {
-									setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.1 }] });
-									console.log('elseHash', hash);
-								}
+								// if (event.target.className === 'card' && event.target.children[0].innerText != d.id) {
+								// 	setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.5 }] });
+								// 	console.log('Hash', hash);
+								// } else {
+								// 	setHash({ ...hash, catsdata: [...restD, { ...d, opacity: 0.1 }] });
+								// 	console.log('elseHash', hash);
+								// }
 							}}>
 							<h1>{d.id}</h1>
 							<p>{d.text}</p>
