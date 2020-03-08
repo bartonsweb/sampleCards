@@ -26,6 +26,7 @@ const App = () => {
 		showFav: false,
 		sortByLastWord: false,
 	});
+	const [selectedCard, setSelectedCard] = useState(null) //Create state for "selected" (clicked) card so we know a card is clicked
 	const node = useRef();
 
 	// const opacityCardHandler = (e) => {
@@ -71,10 +72,11 @@ const App = () => {
 
 			{hash.catsdata.map((d, i) => {
 				return (
-					<div ref={node} key={d.id} style={{ backgroundColor: d.favorite ? '#da7878' : '#f5f699' }}>
+					<div ref={node} key={d.id} style={{ backgroundColor: d.favorite ? '#da7878' : '#f5f699', opacity: selectedCard !== null && selectedCard !== d.id ? 0.1 : 1}}>
 						<div
 							// className={`card-${d.opacity}`}
 							onClick={(event) => {
+								setSelectedCard(d.id) //On click of card, set our selectedCard state to the ID of the card that was clicked.
 								// console.log(
 								// 	'e.target class=>',
 								// 	event.target.className,
